@@ -94,7 +94,7 @@ public class Calculator extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 424, 580);
+		frame.setBounds(100, 100, 424, 629);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel inputPanel = new JPanel();
@@ -137,17 +137,19 @@ public class Calculator extends JFrame {
 		mainCalc.add(addButton);
 		
 		loadButton = new JButton("LOAD");
+		loadButton.setBounds(140, 245, 123, 27);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(24, 97, 361, 150);
+		mainCalc.add(scrollPane);
 		equationBox = new JTextArea();
-		equationBox.setColumns(20);
-		scrollPane = new JScrollPane(equationBox);
-		scrollPane.setSize(361, -130);
-		scrollPane.setLocation(24, 229);
-		HistoryHandler mouseHandler = new HistoryHandler(equationBox, loadButton);
-		loadButton.addMouseListener(mouseHandler);
-		equationBox.addMouseListener(mouseHandler);
+		scrollPane.setViewportView(equationBox);
+		HistoryHandler historyHandler = new HistoryHandler(equationBox, loadButton);
+		loadButton.addActionListener(historyHandler);
+		equationBox.addMouseListener(historyHandler);
 		// equationBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		equationBox.setBounds(23, 104, 362, 143);
 		mainCalc.add(scrollPane);
+		mainCalc.add(loadButton);
 	
 		
 		
@@ -157,7 +159,7 @@ public class Calculator extends JFrame {
 		mainCalc.add(lblHistory);
 		
 		JPanel buttonArray = new JPanel();
-		buttonArray.setBounds(23, 301, 362, 138);
+		buttonArray.setBounds(23, 339, 362, 138);
 		buttonArray.setLayout(new GridLayout(4, 6, 10, 10));
 		mainCalc.add(buttonArray);
 		
@@ -258,7 +260,7 @@ public class Calculator extends JFrame {
 		buttonArray.add(btnNaturalLog);
 		
 		JPanel answerArray = new JPanel();
-		answerArray.setBounds(23, 450, 362, 50);
+		answerArray.setBounds(23, 488, 362, 50);
 		mainCalc.add(answerArray);
 		answerArray.setLayout(new GridLayout(1, 2, 10, 5));
 		
@@ -271,7 +273,7 @@ public class Calculator extends JFrame {
 		answerArray.add(btnEnter);
 		
 		JPanel outputPanel = new JPanel();
-		outputPanel.setBounds(23, 258, 362, 32);
+		outputPanel.setBounds(23, 296, 362, 32);
 		mainCalc.add(outputPanel);
 		
 		JLabel lblOutput = new JLabel("Output:- ");
