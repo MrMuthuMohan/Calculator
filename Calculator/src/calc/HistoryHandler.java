@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultEditorKit;
 
@@ -15,11 +17,16 @@ public class HistoryHandler implements MouseListener, ActionListener {
 	
 	JTextArea textArea;
 	JButton loader;
+	JButton addbutton;
+	JTextField textField;
 	Action selectLine;
+	private ArrayList<String> eqList = new ArrayList();
 	
-	HistoryHandler(JTextArea textbox, JButton loadButton) {
+	HistoryHandler(JTextArea textbox, JButton loadButton, JTextField textField, JButton addbutton) {
 		this.loader = loadButton;
 		this.textArea = textbox;
+		this.textField = textField;
+		this.addbutton = addbutton;
 		selectLine = getAction(DefaultEditorKit.selectLineAction);
 	}
 	
@@ -61,7 +68,15 @@ public class HistoryHandler implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == loader) {
-			
+			String text=textArea.getSelectedText();
+			textField.setText(text);
+		} else if(e.getSource() == addbutton) {
+			eqList.add(textField.getText()+"\n");
+			textArea.setText("");
+			for(int i=0; i<eqList.size(); i++) {
+					textArea.append(eqList.get(i));
+				
+			}
 		}
 		
 	}

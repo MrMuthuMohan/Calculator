@@ -64,7 +64,6 @@ public class Calculator extends JFrame {
 	
 	private JTextField outputTextfield;
 	
-	private ArrayList<String> eqList = new ArrayList();
 
 	/**
 	 * Launch the application.
@@ -133,7 +132,6 @@ public class Calculator extends JFrame {
 		addButton = new JButton("ADD");
 		addButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		addButton.setBounds(202, 38, 73, 32);
-		addButton.addActionListener(buttonHandler);
 		mainCalc.add(addButton);
 		
 		loadButton = new JButton("LOAD");
@@ -143,12 +141,13 @@ public class Calculator extends JFrame {
 		mainCalc.add(scrollPane);
 		equationBox = new JTextArea();
 		scrollPane.setViewportView(equationBox);
-		HistoryHandler historyHandler = new HistoryHandler(equationBox, loadButton);
+		HistoryHandler historyHandler = new HistoryHandler(equationBox, loadButton, inputTextfield, addButton);
+		addButton.addActionListener(historyHandler);
 		loadButton.addActionListener(historyHandler);
 		equationBox.addMouseListener(historyHandler);
 		// equationBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		equationBox.setBounds(23, 104, 362, 143);
-		mainCalc.add(scrollPane);
+		mainCalc.add( scrollPane);
 		mainCalc.add(loadButton);
 	
 		
@@ -323,21 +322,10 @@ public class Calculator extends JFrame {
 			}
 			if(e.getSource() == btnPlus) {
 				inputTextfield.setText(inputTextfield.getText().concat("+"));
-			}
-			
-			if(e.getSource() == addButton) {
-				eqList.add(inputTextfield.getText()+"\n");
-				equationBox.setText("");
-				for(int i=0; i<eqList.size(); i++) {
-						equationBox.append(eqList.get(i));
-					
-				}
-			}
-			
+			}			
 			if(e.getSource()==btnEnter) {
 				outputTextfield.setText(Integer.toString(Calculations.doCalc(inputTextfield.getText())));
 			}
-	        
 	        if(e.getSource()==btnClear) {
 	        	inputTextfield.setText("");
 	            outputTextfield.setText("");
